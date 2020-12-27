@@ -1,0 +1,14 @@
+{
+  "name": "websocket-projeto",
+  "version": "1.0.0",
+  "description": "Websocket para projeto de DAD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Correia Eduarda Ramos Ruben Antunes",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
