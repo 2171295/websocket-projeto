@@ -50,7 +50,29 @@ io.on('connection', function (socket) {
     })
     socket.on('user_list_updated', (user) => {
         socket.broadcast.emit('user_list_updated', user)
-        console.log('User Updated: User= ' + user.id + " | " + user.name +
+        console.log('User= ' + user.id + " | " + user.name +
             ' Socket ID= ' + socket.id)
+    })
+    socket.on('user_blocked', (user) => {
+        socket.broadcast.emit('user_blocked', user)
+        console.log('User Blocked = ' + user.id + " | " + user.name + ")")
+    })
+    socket.on('user_available', (user) => {
+        socket.broadcast.emit('user_available', user)
+        console.log('User Available = ' + user.id + " | " + user.name + ")")
+    })
+    socket.on('products_list_updated', (product) => {
+        socket.broadcast.emit('products_list_updated', product)
+        console.log('Product= ' + product.id + " | " + product.name+ ")")
+    })
+    socket.on('order_created', (order) => {
+        socket.broadcast.emit('order_created', order)
+        console.log('Order= ' + order.id + ")")
+    })
+    socket.on('notification', (payload) => {
+        let session = sessions.getUserSession(payload.destinationUser.id)
+        if (session) {
+            socket.to(session.socketID).emit('notification', payload)
+        }
     })
 })
