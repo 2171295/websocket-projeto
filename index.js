@@ -85,7 +85,7 @@ io.on('connection', function (socket) {
     })
     socket.on('order_taken_delivery', (user) => {
         socket.broadcast.emit('order_taken_delivery', user)
-        console.log('User ' + user.id + "has taken an order to delivery")
+        console.log('User ' + user.id + " has taken an order to delivery")
     })
     socket.on('notification', (payload) => {
         let session = sessions.getUserSession(payload.destinationUser.id)
