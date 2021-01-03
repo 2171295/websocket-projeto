@@ -28,6 +28,12 @@ io.on('connection', function (socket) {
                 break;
         }
     })
+    socket.on('disconnect', (reason) => {
+        let l = sessions.removeSocketIDSession(socket.id)
+        console.log('Disconnect Socket ID= ' + socket.id)
+        console.log(' -> Total Sessions= ' + sessions.users.size)
+        socket.broadcast.emit('user_disconnect',l.user)
+    })
     socket.on('user_logged', (user) => {
         if (user) {
             sessions.addUserSession(user, socket.id)
@@ -35,7 +41,7 @@ io.on('connection', function (socket) {
             console.log('User Logged: User= ' + user.id + " | " + user.name +
                 ' Socket ID= ' + socket.id)
             console.log(' -> Total Sessions= ' + sessions.users.size)
-            socket.broadcast.emit('user_logged')
+            socket.broadcast.emit('user_logged',user)
         }
     })
     socket.on('user_logged_out', (user) => {
@@ -67,7 +73,19 @@ io.on('connection', function (socket) {
     })
     socket.on('order_created', (order) => {
         socket.broadcast.emit('order_created', order)
-        console.log('Order= ' + order.id + ")")
+        console.log('Order= ' + order.id )
+    })
+    socket.on('order_cooked', (order) => {
+        socket.broadcast.emit('order_cooked', order)
+        console.log('Order ' + order.id + "has been cooked. Ready to deliver")
+    })
+    socket.on('order_assign_cook', (user) => {
+        socket.broadcast.emit('order_assign_cook', user)
+        console.log('User ' + user.id + "has an order assign")
+    })
+    socket.on('order_taken_delivery', (user) => {
+        socket.broadcast.emit('order_taken_delivery', user)
+        console.log('User ' + user.id + "has taken an order to delivery")
     })
     socket.on('notification', (payload) => {
         let session = sessions.getUserSession(payload.destinationUser.id)
