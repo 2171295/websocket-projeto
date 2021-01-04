@@ -79,6 +79,10 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('order_cooked', order)
         console.log('Order ' + order.id + "has been cooked. Ready to deliver")
     })
+    socket.on('order_delivered', (order) => {
+        socket.broadcast.emit('order_delivered', order)
+        console.log('Order ' + order.id + "has been delivered.")
+    })
     socket.on('order_assign_cook', (user) => {
         socket.broadcast.emit('order_assign_cook', user)
         console.log('User ' + user.id + "has an order assign")
